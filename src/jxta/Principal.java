@@ -499,7 +499,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             ListaPeers.start();
             btnPesquisarPeers.setEnabled(false);
-            //btnPararPesquisaPeers.setEnabled(true);
+            btnPararPesquisaPeers.setEnabled(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "JArticles", JOptionPane.ERROR_MESSAGE);
         }
