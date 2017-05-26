@@ -185,8 +185,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPaneArquivosCompartilhados" min="-2" pref="256" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnAtualizarMeusArquivos" min="-2" pref="19" max="-2" attributes="0"/>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <Component id="btnAtualizarMeusArquivos" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -246,12 +246,10 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jScrollPaneArquivosCompartilhados1" pref="0" max="32767" attributes="1"/>
+                      <Component id="jScrollPaneArquivosCompartilhados1" pref="470" max="32767" attributes="1"/>
                       <Group type="102" attributes="0">
-                          <Component id="txtNomeArquivo" min="-2" pref="272" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Component id="btnPesquisarArquivo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnPesquisarArquivo" min="-2" pref="160" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnPararPesquisa" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jPanelSatusDownload" max="32767" attributes="0"/>
@@ -266,7 +264,6 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtNomeArquivo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPesquisarArquivo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPararPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -317,14 +314,12 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="txtNomeArquivo">
-        </Component>
         <Component class="javax.swing.JButton" name="btnPesquisarArquivo">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/jxta/icons/icon-conexao.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Pesquisar"/>
+            <Property name="text" type="java.lang.String" value="Pesquisar arquivos"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesquisarArquivoActionPerformed"/>

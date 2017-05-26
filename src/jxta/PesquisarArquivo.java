@@ -5,6 +5,7 @@
  */
 package jxta;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.jxta.peergroup.PeerGroup;
@@ -64,7 +65,7 @@ public class PesquisarArquivo extends Thread {
 
 class ListaRequisicao extends CachedListContentRequest {
 
-    public static ContentAdvertisement[] resultadoPesquisa = null;
+    public static ContentAdvertisement[] resultadoPesquisa = null;   
     private final JTable tabela;
 
     public ListaRequisicao(PeerGroup grupo, String subStr, JTable tabela) {
@@ -74,13 +75,23 @@ class ListaRequisicao extends CachedListContentRequest {
 
     @Override
     public void notifyMoreResults() {
+        int countPDFs = 0;
         resultadoPesquisa = getResults();
+        for(int i = 0; i < resultadoPesquisa.length; i++) {
+            String extensao = resultadoPesquisa[i].getName().substring(resultadoPesquisa[i].getName().lastIndexOf("."), resultadoPesquisa[i].getName().length());            
+            if(extensao.equalsIgnoreCase(".pdf")) {
+                countPDFs++;
+            }
+        }
         //String[] titles = {"Nome do Arquivo", "Tamanho (Bytes)", "Check Sum (CRC-32)"};
         String[] titles = {"Nome do Arquivo"};
-        DefaultTableModel TableModel = new DefaultTableModel(titles, resultadoPesquisa.length);
+        DefaultTableModel TableModel = new DefaultTableModel(titles, countPDFs);
         tabela.setModel(TableModel);
-        for (int i = 0; i < resultadoPesquisa.length; i++) {
-            tabela.setValueAt(resultadoPesquisa[i].getName(), i, 0);
+        for (int i = 0; i < resultadoPesquisa.length; i++) {                       
+            String extensao = resultadoPesquisa[i].getName().substring(resultadoPesquisa[i].getName().lastIndexOf("."), resultadoPesquisa[i].getName().length());            
+            if(extensao.equalsIgnoreCase(".pdf")) {
+                tabela.setValueAt(resultadoPesquisa[i].getName(), i, 0);
+            }
             //tabela.setValueAt(resultadoPesquisa[i].getLength(), i, 1);
             //tabela.setValueAt(resultadoPesquisa[i].getDescription(), i, 2);
         }

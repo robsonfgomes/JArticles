@@ -7,6 +7,8 @@ package jxta;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -42,6 +44,7 @@ public class Principal extends javax.swing.JFrame {
     
     public void InicializarInterface() {
         try {
+            btnAtualizarMeusArquivos.setVisible(false);
             setResizable(false);
             setLocationRelativeTo(null);
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -74,7 +77,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPaneArquivosCompartilhados1 = new javax.swing.JScrollPane();
         JTableArquivosCompartilhados = new javax.swing.JTable();
-        txtNomeArquivo = new javax.swing.JTextField();
         btnPesquisarArquivo = new javax.swing.JButton();
         btnPararPesquisa = new javax.swing.JButton();
         btnDownload = new javax.swing.JButton();
@@ -94,7 +96,6 @@ public class Principal extends javax.swing.JFrame {
         TermosDeUso.setAlwaysOnTop(true);
         TermosDeUso.setMinimumSize(new java.awt.Dimension(790, 540));
         TermosDeUso.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        TermosDeUso.setPreferredSize(new java.awt.Dimension(790, 540));
         TermosDeUso.setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jxta/icons/fundo-jarticles.png"))); // NOI18N
@@ -213,8 +214,8 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPaneArquivosCompartilhados, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAtualizarMeusArquivos, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(btnAtualizarMeusArquivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar"));
@@ -256,7 +257,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPaneArquivosCompartilhados1.setViewportView(JTableArquivosCompartilhados);
 
         btnPesquisarArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jxta/icons/icon-conexao.png"))); // NOI18N
-        btnPesquisarArquivo.setText("Pesquisar");
+        btnPesquisarArquivo.setText("Pesquisar arquivos");
         btnPesquisarArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarArquivoActionPerformed(evt);
@@ -333,12 +334,10 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPaneArquivosCompartilhados1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneArquivosCompartilhados1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtNomeArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnPesquisarArquivo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPesquisarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnPararPesquisa))
                     .addComponent(jPanelSatusDownload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDownload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -349,7 +348,6 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNomeArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisarArquivo)
                     .addComponent(btnPararPesquisa))
                 .addGap(18, 18, 18)
@@ -474,6 +472,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnPesquisarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarArquivoActionPerformed
         // TODO add your handling code here:
+        /*
         try {
             String nomeArquivo = this.txtNomeArquivo.getText();
             if (!"".equals(nomeArquivo)) {
@@ -492,8 +491,27 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "JArticles", JOptionPane.ERROR_MESSAGE);
         }
+        */
+        principal.pesquisarAllArquivos();
     }//GEN-LAST:event_btnPesquisarArquivoActionPerformed
 
+    //Inicia a pesquisa inicial para recuperar todos os arquivos
+    private void pesquisarAllArquivos() {
+        try {
+            String nomeArquivo = "";
+            
+            IniciarPesquisa = new PesquisarArquivo(Conexao.getGrupoSistemaDistribuidos(), nomeArquivo, this.JTableArquivosCompartilhados);
+            IniciarPesquisa.start();
+            btnPesquisarArquivo.setEnabled(false);
+            btnPararPesquisa.setEnabled(true);
+            btnDownload.setEnabled(false);
+            //txtNomeArquivo.setEnabled(false);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "JArticles", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void btnPesquisarPeersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarPeersActionPerformed
         // TODO add your handling code here:
         try {
@@ -552,7 +570,7 @@ public class Principal extends javax.swing.JFrame {
             btnPesquisarArquivo.setEnabled(true);
             btnDownload.setEnabled(true);
             btnPararPesquisa.setEnabled(false);
-            txtNomeArquivo.setEnabled(true);
+            //txtNomeArquivo.setEnabled(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERRO: " + ex.getMessage(), "JArticles", JOptionPane.ERROR_MESSAGE);
         }
@@ -598,6 +616,9 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         principal = new Principal();                              
@@ -616,6 +637,13 @@ public class Principal extends javax.swing.JFrame {
         ListaPeers = new ListaDePeers(Conexao.getGrupoSistemaDistribuidos(), principal.ListaDePeers);
         IniciarCompartilhamento = new GrupoCompartilhamento(Conexao.getGrupoSistemaDistribuidos(), new File(Caminho));
         IniciarCompartilhamento.start();
+        
+        //Atualizando a lista de arquivos online
+        principal.pesquisarAllArquivos();
+        
+        //Atualizando a lista de arquivos locais
+        setTimeOut updateMeusArquivos = new setTimeOut(principal.meusArquivosCompartilhados, Caminho);
+        updateMeusArquivos.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -645,6 +673,59 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblStatus;
     public javax.swing.JTable meusArquivosCompartilhados;
     public javax.swing.JProgressBar minhaBarraDeProgresso;
-    private javax.swing.JTextField txtNomeArquivo;
     // End of variables declaration//GEN-END:variables
+}
+
+class setTimeOut extends Thread{
+    javax.swing.JTable arquivosCompartilhados;
+    String Caminho = null;
+    
+    public setTimeOut(javax.swing.JTable table, String c) {
+        this.arquivosCompartilhados = table;
+        this.Caminho = c;
+    }
+
+    @Override
+    public void run() {
+        try {
+            while(true) {
+                File diretorio = new File(Caminho);
+                File[] listaArquivos = diretorio.listFiles(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String filename) {
+                        return filename.endsWith(".pdf");
+                    }
+                });
+                String[] tituloTabela = {"Nome do Arquivo"};
+                int qtArquivos = 0;
+                for (File listaArquivo : listaArquivos) {
+                    if (listaArquivo.isFile()) {
+                        qtArquivos++;
+                    }
+                }
+                DefaultTableModel TableModel = new DefaultTableModel(tituloTabela, qtArquivos) {
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int mColIndex) {
+                        return false;
+                    }
+                };
+                arquivosCompartilhados.setModel(TableModel);
+                int j = 0;
+                for (File listaArquivo : listaArquivos) {
+                    if (listaArquivo.isFile()) {
+                        arquivosCompartilhados.setValueAt(listaArquivo.getName(), j, 0);
+                        //meusArquivosCompartilhados.setValueAt(listaArquivo.length(), j, 1);
+                        //meusArquivosCompartilhados.setValueAt(MeuCheckSum.getSumArquivo(listaArquivo), j, 2);
+                        j++;
+                    }
+                }
+                Thread.sleep(3000);
+            }
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(setTimeOut.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 }
